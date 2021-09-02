@@ -18,6 +18,8 @@ class CrearTablaLibros extends Migration
         $table->string('nombre');
         $table->string('autor');
         $table->date('fecha_publicacion');
+        $table->integer('id_categoria')->unsigned();
+        $table->foreign('id_categoria')->references('id')->on('categorias');
         $table->integer('usuario_adquiriente')->nullable()->unsigned();
         $table->foreign('usuario_adquiriente')->references('id')->on('users');
         $table->timestamps();

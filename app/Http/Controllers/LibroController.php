@@ -10,6 +10,8 @@ class LibroController extends Controller
     
     public function vistaRegistrarLibro(){
 
+        return view('Libros.registrar-libros');
+
     }
 
     public function obtenerLibros(){
@@ -51,6 +53,51 @@ class LibroController extends Controller
 
         return response()->json(['response' => 'success', 'status' => 1, 'data' => ($lista_libros)],200);
 
+
+
+    }
+
+
+    public function crearLibro(Request $request){
+ 
+        $respuesta = 0;
+
+                try {
+            
+                DB::beginTransaction();
+
+                    $usuario = new user();
+                    $usuario->usuario = $request->usuario;
+                    $usuario->email = $request->correo;
+                    $usuario->password = bcrypt($request->contrasena);
+                    $usuario->save();
+
+                    $persona_responsable = new PersonaCliente();
+                    $persona_responsable->nombres_razonSocial = mb_strtoupper($request->nombre);
+                    $persona_responsable->persona_contacto = mb_strtoupper($request->persona_contacto);
+                    $persona_responsable->telefono = $request->telefono;
+                    $persona_responsable->tipoUsuario = "CLIENTE";
+                    $persona_responsable->id_usuario = $usuario->id;
+                    $persona_responsable->id_responsable = auth()->user()['id'];
+                    $persona_responsable->save();
+
+                    $role_cliente = Role::find(3);
+                    $usuario->roles()->attach($role_cliente); 
+
+
+                    DB::commit();
+                    $respuesta = 1;
+
+                } catch (\PDOException $e) {
+                    DB::rollback();
+                    return $e->getMessage   (); 
+                    $respuesta = 2;
+                }
+
+
+
+
+        return $respuesta;
 
 
     }

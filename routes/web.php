@@ -26,3 +26,5 @@ Route::post('/ingresar', 'Auth\LoginController@loguearse')->name('login.post');
 Route::get('registrar-libro','LibroController@vistaRegistrarLibro')->name('registrar-libro');
 
 Route::get('obtener-libros','LibroController@obtenerLibros')->name('obtener-libros');  
+
+Route::post('/crear-libro', 'LibroController@crearLibro')->name('crear-libro');
