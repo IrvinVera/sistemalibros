@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Libro;
+use App\User;
+use DB;
 
 class LibroController extends Controller
 {
@@ -18,24 +20,39 @@ class LibroController extends Controller
 
         $lista_libros = array(); 
 
-            $librosEncontrados = Libro::all();
-
+        $librosEncontrados = Libro::all();
 
         foreach ($librosEncontrados as $libro ) {
             
             $acciones = '
             <a>
-            <button type="button" name="'.$libro->id.'" class="btn" data-toggle="tooltip" data-placement="top" title="Ver carpeta">
-                <i class="nav-icon i-Folder-Archive" style="font-size: 15px;"></i>
-            </button>
-        </a>
+                <button type="button" name="'.$libro->id.'" class="btn" data-toggle="tooltip" data-placement="top" title="Ver carpeta">
+                    <i class="nav-icon i-Folder-Archive" style="font-size: 15px;"></i>
+                </button>
+            </a>
 
-        <a>
-            <button type="button" name="'.$libro->id.'" class="btn btnAcuerdo" data-toggle="tooltip" data-placement="top" title="Agregar acuerdo">
-                <i class="nav-icon i-Add-File" style="font-size: 15px;"></i>
-            </button>
-        </a>
+            <a>
+                <button type="button" name="'.$libro->id.'" class="btn btnAcuerdo" data-toggle="tooltip" data-placement="top" title="Agregar acuerdo">
+                    <i class="nav-icon i-Add-File" style="font-size: 15px;"></i>
+                </button>
+            </a>
                 ';
+
+            $libroDisponible = false;
+            $adquiridor = "";
+
+
+
+            if($libro->usuario_adquiriente == NULL){
+
+                $libroDisponible = "Si";
+
+            }else{
+                $usuario_Adquiriente = User::find($libro->usuario_adquiriente);
+                $adquiridor = $usuario_Adquiriente->nombre;
+                $libroDisponible = "No";
+                
+            }
 
 
             array_push($lista_libros, array(
@@ -43,8 +60,8 @@ class LibroController extends Controller
                 'autor'=>          $libro->autor,
                 'fecha'=>         $libro->fecha_publicacion,
                 'categoria'=>       1,
-                'disponible'=>          $libro->usuario_adquiriente,
-                'adquiridor'=>          1,
+                'disponible'=>          $libroDisponible,
+                'adquiridor'=>          $adquiridor,
                 'Acciones'=>        $acciones, 
 
             ));
@@ -62,40 +79,22 @@ class LibroController extends Controller
  
         $respuesta = 0;
 
-                try {
-            
-                DB::beginTransaction();
+            try {
 
-                    $usuario = new user();
-                    $usuario->usuario = $request->usuario;
-                    $usuario->email = $request->correo;
-                    $usuario->password = bcrypt($request->contrasena);
-                    $usuario->save();
+                $libro = new Libro();
+                $libro->nombre = $request->nombre;
+                $libro->autor = $request->autor;
+                $libro->fecha_publicacion = $request->fecha;
+                $libro->id_categoria = 1;
+                $libro->save();
+                $respuesta = 1;
 
-                    $persona_responsable = new PersonaCliente();
-                    $persona_responsable->nombres_razonSocial = mb_strtoupper($request->nombre);
-                    $persona_responsable->persona_contacto = mb_strtoupper($request->persona_contacto);
-                    $persona_responsable->telefono = $request->telefono;
-                    $persona_responsable->tipoUsuario = "CLIENTE";
-                    $persona_responsable->id_usuario = $usuario->id;
-                    $persona_responsable->id_responsable = auth()->user()['id'];
-                    $persona_responsable->save();
+            } catch (\PDOException $e) {
 
-                    $role_cliente = Role::find(3);
-                    $usuario->roles()->attach($role_cliente); 
+                return $e->getMessage   (); 
+                $respuesta = 2;
 
-
-                    DB::commit();
-                    $respuesta = 1;
-
-                } catch (\PDOException $e) {
-                    DB::rollback();
-                    return $e->getMessage   (); 
-                    $respuesta = 2;
-                }
-
-
-
+            }
 
         return $respuesta;
 

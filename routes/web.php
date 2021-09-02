@@ -28,3 +28,5 @@ Route::get('registrar-libro','LibroController@vistaRegistrarLibro')->name('regis
 Route::get('obtener-libros','LibroController@obtenerLibros')->name('obtener-libros');  
 
 Route::post('/crear-libro', 'LibroController@crearLibro')->name('crear-libro');
+
+Route::get('obtener-categorias','CategoriaController@listarCategorias')->name('obtener-categorias'); 

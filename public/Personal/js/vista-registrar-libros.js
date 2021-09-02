@@ -18,6 +18,8 @@ $.validator.addMethod(
 
 $( document ).ready(function() {
 
+    obtenerCategorias();
+
     $( "#formRegistroNuevoLibro" ).validate( {
         rules: {
             nombre:{
@@ -110,6 +112,36 @@ $( document ).ready(function() {
 
 
 
+});
 
+function obtenerCategorias(){
+
+    $.ajax({
+        url: "obtener-categorias",
+        type: "GET",
+        dataType: "json",
+    success : function(response) {
+
+        console.log(response);
+        cargarDatosSelect($('#categoria'), null, response);
+
+    }
 
 });
+
+
+}
+
+
+function cargarDatosSelect(divContent = null, idSelected = null, datos = null, extras = null) {
+    divContent.empty();
+    html = '';
+    html = html + '<option value="" selected style="min-width: 300px;"> Selecciona una opción </option>'
+    $.each(datos, function(key, value) {
+        html += '<option ';
+        // html += (extras && extras.subtext) ? ' data-subtext="' + value.nombre + '"' : '';
+        html += ' value="' + value.id + '" ';
+        html += '>' + value.nombre + '</option>';
+    });
+    divContent.append(html);
+}

@@ -31,7 +31,8 @@
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="categoria">Categoría</label>
-                                <input type="text" class="form-control form-control-rounded" name="categoria" id="idCategria" type="text" maxlength="50" data-validation="custom required" data-validation-regexp="^([a-z-A-Z\s-ZñÑáéíóúÁÉÍÓÚ]+)$"/>
+                                <select class="form-control form-control-rounded" id="categoria" name="categoria" style="width:100%;" required>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -45,7 +46,8 @@
 @endsection
 
 @section('page-js')
-
+<!-- <script type="text/javascript" src="...path-to/jquery.validation/1.15.0/jquery.validate.js" /> -->
+<!-- <script type="text/javascript" src="...path-to/jquery-validation/localization/messages_es.js" /> -->
 <script src="{{ asset('Plugins/validator/jquery.validate.min.js')}}" ></script> 
 <script src="{{asset ('Personal/js/vista-registrar-libros.js')}}"></script> 
 
