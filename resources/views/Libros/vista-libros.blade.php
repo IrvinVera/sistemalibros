@@ -27,7 +27,7 @@
                                     <th scope="col">Fecha Publicacion</th>
                                     <th scope="col">Categoría</th>
                                     <th scope="col">Disponible</th>
-                                    <th scope="col">Adquiridor</th>
+                                    <th scope="col">Usuario que la tiene</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>

@@ -30,3 +30,5 @@ Route::get('obtener-libros','LibroController@obtenerLibros')->name('obtener-libr
 Route::post('/crear-libro', 'LibroController@crearLibro')->name('crear-libro');
 
 Route::get('obtener-categorias','CategoriaController@listarCategorias')->name('obtener-categorias'); 
+
+Route::get('vista-actualizar-libro/{idLibro}', 'LibroController@vistaActualizarLibro')->name('vista-actualizar-libro');

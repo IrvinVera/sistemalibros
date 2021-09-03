@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Libro;
+use App\Categoria;
 use App\User;
 use DB;
 
@@ -16,6 +17,17 @@ class LibroController extends Controller
 
     }
 
+    public function vistaActualizarLibro(Request $request){
+
+        $id = intval($request->idLibro);
+        
+        $datosLibro = Libro::find($id);
+    
+        return view('Libros.editar-libro')->with('datosLibro',$datosLibro);
+
+    }
+
+
     public function obtenerLibros(){
 
         $lista_libros = array(); 
@@ -25,22 +37,27 @@ class LibroController extends Controller
         foreach ($librosEncontrados as $libro ) {
             
             $acciones = '
-            <a>
-                <button type="button" name="'.$libro->id.'" class="btn" data-toggle="tooltip" data-placement="top" title="Ver carpeta">
-                    <i class="nav-icon i-Folder-Archive" style="font-size: 15px;"></i>
+            <a href ="'.route('vista-actualizar-libro', $libro->id).'">
+                <button type="button" name="'.$libro->id.'" class="btn" data-toggle="tooltip" data-placement="top" title="Editar libro">
+                    <i class="nav-icon i-Male-21" style="font-size: 15px;"></i>
                 </button>
             </a>
 
             <a>
-                <button type="button" name="'.$libro->id.'" class="btn btnAcuerdo" data-toggle="tooltip" data-placement="top" title="Agregar acuerdo">
-                    <i class="nav-icon i-Add-File" style="font-size: 15px;"></i>
+                <button type="button" name="'.$libro->id.'" class="btn btnDisponibilidad" data-toggle="tooltip" data-placement="top" title="Cambiar disponibilidad">
+                    <i class="nav-icon i-Key" style="font-size: 15px;"></i>
+                </button>
+            </a>
+
+            <a>
+                <button type="button" name="'.$libro->id.'" class="btn btnEliminar" data-toggle="tooltip" data-placement="top" title="Eliminar libro">
+                    <i class="i-Close" style="font-size: 18px;"></i>
                 </button>
             </a>
                 ';
 
             $libroDisponible = false;
             $adquiridor = "";
-
 
 
             if($libro->usuario_adquiriente == NULL){
@@ -54,22 +71,22 @@ class LibroController extends Controller
                 
             }
 
+            $categoria = Categoria::find($libro->id_categoria);
 
             array_push($lista_libros, array(
-                'nombre'=>          $libro->nombre,
-                'autor'=>          $libro->autor,
-                'fecha'=>         $libro->fecha_publicacion,
-                'categoria'=>       1,
-                'disponible'=>          $libroDisponible,
-                'adquiridor'=>          $adquiridor,
-                'Acciones'=>        $acciones, 
+                'nombre'=>$libro->nombre,
+                'autor'=>$libro->autor,
+                'fecha'=>$libro->fecha_publicacion,
+                'categoria'=>$categoria->nombre,
+                'disponible'=>$libroDisponible,
+                'adquiridor'=>$adquiridor,
+                'Acciones'=>$acciones, 
 
             ));
 
         }
 
         return response()->json(['response' => 'success', 'status' => 1, 'data' => ($lista_libros)],200);
-
 
 
     }
@@ -85,7 +102,7 @@ class LibroController extends Controller
                 $libro->nombre = $request->nombre;
                 $libro->autor = $request->autor;
                 $libro->fecha_publicacion = $request->fecha;
-                $libro->id_categoria = 1;
+                $libro->id_categoria = $request->categoria;
                 $libro->save();
                 $respuesta = 1;
 

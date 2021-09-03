@@ -17,10 +17,10 @@ $.validator.addMethod(
 
 
 $( document ).ready(function() {
-
+    
     obtenerCategorias();
 
-    $( "#formRegistroNuevoLibro" ).validate( {
+    $( "#formActualizarLibro" ).validate( {
         rules: {
             nombre:{
                 required:true,
@@ -38,11 +38,9 @@ $( document ).ready(function() {
         messages:{
             nombre :{
                 required: 'Favor de completar el campo',
-                regex: "Sólo letras"
             },
             autor :{
                 required: 'Favor de completar el campo',
-                regex: "Sólo letras",
             },
             fecha :{
                 required: 'Favor de completar el campo',
@@ -71,9 +69,9 @@ $( document ).ready(function() {
             submitHandler: function () {
             
                 $.ajax({
-                    url: "crear-libro",
+                    url: route('actualizar-libro'),
                     type: "POST",
-                data: $("#formRegistroNuevoLibro").serialize(),
+                data: $("#formActualizarLibro").serialize(),
                 dataType: "json",
                 success : function(response) {
 
@@ -91,14 +89,19 @@ $( document ).ready(function() {
                          location.href = route('home');
                     });
 
-
                     }
 
                     if(response == 2){
 
-                        swal("Error interno!", "No se pudo registrar correctamente al residente.", "error");
+                        swal("Nombre repetido!", "El correo ingresado ya se encuentra registrado.", "warning");
 
                     }
+
+                    if(response == 3){
+
+                        swal("Error interno!", "No se pudo registrar correctamente al residente.", "error");
+
+                    }                
 
                 }
 
@@ -107,22 +110,20 @@ $( document ).ready(function() {
 
     });
 
-
-
-
 });
+
 
 function obtenerCategorias(){
 
-        $.ajax({
-            url: "obtener-categorias",
-            type: "GET",
-            dataType: "json",
-        success : function(response) {
-            console.log(response);
-            cargarDatosSelect($('#categoria'), null, response);
+    $.ajax({
+        url: "obtener-categorias",
+        type: "GET",
+        dataType: "json",
+    success : function(response) {
 
-        }
+        cargarDatosSelect($('#categoria'), null, response);
+
+    }
 
     });
 
@@ -133,7 +134,6 @@ function obtenerCategorias(){
 function cargarDatosSelect(divContent = null, idSelected = null, datos = null, extras = null) {
     divContent.empty();
     html = '';
-    html = html + '<option value="" selected style="min-width: 300px;"> Selecciona una opción </option>'
     $.each(datos, function(key, value) {
         html += '<option ';
         html += ' value="' + value.id + '" ';
