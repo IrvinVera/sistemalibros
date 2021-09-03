@@ -1,3 +1,4 @@
+
 $.validator.setDefaults( {
 
 
@@ -17,8 +18,10 @@ $.validator.addMethod(
 
 
 $( document ).ready(function() {
+    var str = $("#myInput").val();
+       
     
-    obtenerCategorias();
+    obtenerCategorias(str);
 
     $( "#formActualizarLibro" ).validate( {
         rules: {
@@ -113,14 +116,14 @@ $( document ).ready(function() {
 });
 
 
-function obtenerCategorias(){
-
+function obtenerCategorias(url){
+    var uerreele = url;
     $.ajax({
-        url: "obtener-categorias",
+        url: uerreele+"/obtener-categorias",
         type: "GET",
         dataType: "json",
     success : function(response) {
-
+        console.log(response);
         cargarDatosSelect($('#categoria'), null, response);
 
     }

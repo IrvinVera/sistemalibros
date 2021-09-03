@@ -36,7 +36,8 @@
                             </div>
                         </div>
                     </div>
-
+                    <input value="{{$datosLibro->id}}" class="form-control form-control-rounded" name="idLibro" id="idLibro" type="hidden"/>
+                    <input type="text" id="myInput" value="{{url('/')}}" style="display:none;!important">
                     <div class="col-md-6" style="margin-top:20px;" >
                         <button type="submit" style="float:right" class="btn btn-primary" id="btnGuardar">Guardar</button>
                     </div>
