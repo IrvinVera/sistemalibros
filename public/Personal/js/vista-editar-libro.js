@@ -18,10 +18,9 @@ $.validator.addMethod(
 
 
 $( document ).ready(function() {
-    var str = $("#myInput").val();
+    var ruta = $("#ruta").val();
        
-    
-    obtenerCategorias(str);
+    obtenerCategorias(ruta);
 
     $( "#formActualizarLibro" ).validate( {
         rules: {
@@ -124,7 +123,8 @@ function obtenerCategorias(url){
         dataType: "json",
     success : function(response) {
         console.log(response);
-        cargarDatosSelect($('#categoria'), null, response);
+        let idSelected = $('#idCategoriaSeleccionada').val();
+        cargarDatosSelect($('#categoria'), idSelected, response);
 
     }
 
@@ -140,6 +140,7 @@ function cargarDatosSelect(divContent = null, idSelected = null, datos = null, e
     $.each(datos, function(key, value) {
         html += '<option ';
         html += ' value="' + value.id + '" ';
+        html += (idSelected == value.id) ? 'selected ' : '';
         html += '>' + value.nombre + '</option>';
     });
     divContent.append(html);

@@ -119,9 +119,7 @@ function obtenerCategorias(){
             type: "GET",
             dataType: "json",
         success : function(response) {
-            console.log(response);
             cargarDatosSelect($('#categoria'), null, response);
-
         }
 
     });

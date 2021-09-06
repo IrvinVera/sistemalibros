@@ -15,13 +15,11 @@ class DatabaseSeeder extends Seeder
     {
    
         $user = new User();
-        $user->nombre          = 'Emilio Zarate Guzman';
         $user->correo            = 'usuario1@gmail.com';
         $user->password         = bcrypt('primerusuario');
         $user->save();
 
         $user = new User();
-        $user->nombre          = 'Juan Perez Solano';
         $user->correo            = 'usuario2@gmail.com';
         $user->password         = bcrypt('segundousuario');
         $user->save();

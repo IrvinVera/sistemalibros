@@ -19,6 +19,8 @@ Route::get('/', function () {
         }
 });
 
+Route::get('/login','Auth\LoginController@mostrarLogin')->name('mostrarLogin'); 
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/ingresar', 'Auth\LoginController@loguearse')->name('login.post');
@@ -32,3 +34,14 @@ Route::post('/crear-libro', 'LibroController@crearLibro')->name('crear-libro');
 Route::get('obtener-categorias','CategoriaController@listarCategorias')->name('obtener-categorias'); 
 
 Route::get('vista-actualizar-libro/{idLibro}', 'LibroController@vistaActualizarLibro')->name('vista-actualizar-libro');
+
+Route::post('actualizar-libro', 'LibroController@actualizarLibro')->name('actualizar-libro');
+
+Route::post('/eliminar-libro', 'LibroController@eliminarLibro')->name('eliminar-libro');
+
+Route::post('/cambiar-disponibilidad', 'LibroController@cambiarDisponibilidad')->name('cambiar-disponibilidad');
+
+Route::post('/entregar-libro', 'LibroController@entregarLibro')->name('entregar-libro');
+
+
+

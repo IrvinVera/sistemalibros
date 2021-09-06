@@ -31,7 +31,7 @@
 </head>
 
 <body>
-    <div class="auth-layout-wrap" style="background-image: url({{asset('Personal/imagenes/fondoLogin.jpg')}})">
+    <div class="auth-layout-wrap" style="background-image: url({{asset('Personal/imagenes/fondoLogin.png')}})">
         <div class="auth-content tarjetaLogin">
             <div class="card o-hidden col-md-10">
                 <div class="row col-md-13 ">

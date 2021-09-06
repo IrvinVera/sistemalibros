@@ -37,7 +37,8 @@
                         </div>
                     </div>
                     <input value="{{$datosLibro->id}}" class="form-control form-control-rounded" name="idLibro" id="idLibro" type="hidden"/>
-                    <input type="text" id="myInput" value="{{url('/')}}" style="display:none;!important">
+                    <input value="{{$datosLibro->id_categoria}}" class="form-control form-control-rounded" name="categoriaSeleccionada" id="idCategoriaSeleccionada" type="hidden"/>
+                    <input type="text" id="ruta" value="{{url('/')}}" style="display:none;!important">
                     <div class="col-md-6" style="margin-top:20px;" >
                         <button type="submit" style="float:right" class="btn btn-primary" id="btnGuardar">Guardar</button>
                     </div>

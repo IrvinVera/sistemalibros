@@ -12,6 +12,7 @@ class Libro extends Model
         'nombre',
         'autor',
         'fecha_publicacion',
-        'usuario_adquiriente',
+        'disponible',
+        'nombre_adquiriente',
     ];
 }
