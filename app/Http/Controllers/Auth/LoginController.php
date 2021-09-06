@@ -60,4 +60,11 @@ class LoginController extends Controller
             }
 
     }
+
+    public function mostrarLogin(){
+
+        return view('Login.login');
+
+    }
+
 }
