@@ -1,0 +1,9 @@
+Para poder correr el sistema se debe tener un base de datos de nombre "db_sistema_libros".
+Crear el archivo .env y copiar el contenido del ".env.example" en el .env
+Ejecutar el comando composer update
+Ejecutar el comando "php artisan key:generate"
+Ejecutar el comando "php artisan migrate:fresh --seed"
+
+Para ingresar al sistema se cuenta con las sigueintes credenciales:
+Usuario: usuario1@gmail.com
+Contraseña: primerusuario

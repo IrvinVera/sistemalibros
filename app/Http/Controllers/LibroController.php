@@ -23,8 +23,6 @@ class LibroController extends Controller
         $id = intval($request->idLibro);
         
         $datosLibro = Libro::find($id);
-        
-        // dd($datosLibro['id']);
 
         return view('Libros.editar-libro')->with('datosLibro',$datosLibro);
 
@@ -75,9 +73,6 @@ class LibroController extends Controller
                 
 
             }
-
-
-
 
                 $usuario_Adquiriente = "";
 

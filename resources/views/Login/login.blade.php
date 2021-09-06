@@ -38,7 +38,6 @@
                     <div class="col-md-12">
                         <div class="p-4">
                             <div class="auth-logo text-center mb-4">
-                                <!-- <img src="FGE_Favion-300x300.png" alt="10"> -->
                             </div>
                             <div class="auth-logo text-center mb-4">
                                 <h1 class="mb-3 text-30">Sistema de librería</h1>

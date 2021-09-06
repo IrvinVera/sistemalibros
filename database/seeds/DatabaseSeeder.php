@@ -19,11 +19,6 @@ class DatabaseSeeder extends Seeder
         $user->password         = bcrypt('primerusuario');
         $user->save();
 
-        $user = new User();
-        $user->correo            = 'usuario2@gmail.com';
-        $user->password         = bcrypt('segundousuario');
-        $user->save();
-
         $categoria = new Categoria();
         $categoria->nombre = "Terror";
         $categoria->descripcion = "
